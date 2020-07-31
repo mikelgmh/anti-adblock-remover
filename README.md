@@ -1,4 +1,4 @@
-# hide-anti-adblock
+# anti-adblock-remover
 
 Elimina los avisos para deshabilitar el Adblock en diferentes periódicos Españoles. Actualmente este script es compatible con:
 - El Mundo
