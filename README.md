@@ -1,6 +1,6 @@
 # hide-anti-adblock
 
-Elimina los avisos para deshabilitar el Adblock de diferentes periódicos Españoles. Actualmente este script es compatible con:
+Elimina los avisos para deshabilitar el Adblock en diferentes periódicos Españoles. Actualmente este script es compatible con:
 - El Mundo
 - El País
 - El Español
