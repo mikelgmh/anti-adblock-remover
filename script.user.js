@@ -5,7 +5,7 @@
 // @description  Elimina los avisos de Adblock.
 // @author       Mikel Granero
 // @require      https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.4/jquery.min.js
-// @updateURL
+// @updateURL    https://github.com/mikelgmh/anti-adblock-remover/raw/master/script.user.js
 // @include      https://www.elespanol.com/*
 // @include      https://elpais.com/*
 // @include      https://www.elcorreo.com/*
