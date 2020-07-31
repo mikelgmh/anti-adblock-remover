@@ -1,5 +1,7 @@
 # anti-adblock-remover
 
+![alt text](https://i.imgur.com/1NGoCox.png)
+
 Elimina los avisos para deshabilitar el Adblock en diferentes periódicos Españoles. Actualmente este script es compatible con:
 - El Mundo
 - El País
