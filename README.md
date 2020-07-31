@@ -10,4 +10,4 @@ Elimina los avisos para deshabilitar el Adblock en diferentes periódicos Españ
 
 ## Instalación
 
-Requiere de Tampermonkey para utilizarse. Puedes instalar tampermonkey desde la tienda de extensiones de tu navegador. Desde ahí podrás añadir este script.
+Requiere de Tampermonkey para utilizarse. Puedes instalar tampermonkey desde la tienda de extensiones de tu navegador. Una vez instales Tampermonkey haz click [aquí](https://github.com/mikelgmh/anti-adblock-remover/raw/master/script.user.js).
