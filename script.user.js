@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Quitar avisos Adblock
 // @namespace    http://tampermonkey.net/
-// @version      0.12
+// @version      0.14
 // @description  Elimina los avisos de Adblock.
 // @author       Mikel Granero
 // @require      https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.4/jquery.min.js
@@ -11,6 +11,7 @@
 // @include      https://www.elcorreo.com/*
 // @include      https://www.elmundo.es/*
 // @include      https://www.telecinco.es/*
+// @include      https://www.cuatro.com/*
 // @grant        none
 // ==/UserScript==
 
@@ -36,6 +37,9 @@
                 runScriptForPage(nombreFn);
                 break;
             case "telecinco.es":
+                runScriptForPage(nombreFn);
+                break;
+            case "cuatro.com":
                 runScriptForPage(nombreFn);
                 break;
             default:
@@ -74,6 +78,10 @@
         }
 
         function telecinco() {
+            $("#pageMultisite").remove();
+        }
+
+        function cuatro() {
             $("#pageMultisite").remove();
         }
 
