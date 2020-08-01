@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Quitar avisos Adblock
 // @namespace    http://tampermonkey.net/
-// @version      0.20
+// @version      0.21
 // @description  Elimina los avisos de Adblock.
 // @author       Mikel Granero
 // @require      https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.4/jquery.min.js
@@ -16,6 +16,7 @@
 // @include      https://www.cuatro.com/*
 // @include      https://www.energytv.es/*
 // @include      https://www.factoriadeficcion.com/*
+// @include      https://www.libertaddigital.com/*
 // @grant        none
 // ==/UserScript==
 
@@ -58,6 +59,9 @@
             case "energytv.es":
                 runScriptForPage("mediaset");
                 break;
+            case "libertaddigital.com":
+                runScriptForPage("mediaset");
+                break;
             default:
         }
 
@@ -95,6 +99,11 @@
 
         function mediaset() {
             $("#pageMultisite").remove();
+        }
+
+        function libertaddigital() {
+            $(".jquery-modal blocker current").remove();
+            $(".portada scrolled").removeAttr("style")
         }
 
 
