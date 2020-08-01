@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Quitar avisos Adblock
 // @namespace    http://tampermonkey.net/
-// @version      0.21
+// @version      0.22
 // @description  Elimina los avisos de Adblock.
 // @author       Mikel Granero
 // @require      https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.4/jquery.min.js
@@ -60,7 +60,7 @@
                 runScriptForPage("mediaset");
                 break;
             case "libertaddigital.com":
-                runScriptForPage("mediaset");
+                runScriptForPage(nombreFn);
                 break;
             default:
         }
