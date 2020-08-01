@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Quitar avisos Adblock
 // @namespace    http://tampermonkey.net/
-// @version      0.15
+// @version      0.16
 // @description  Elimina los avisos de Adblock.
 // @author       Mikel Granero
 // @require      https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.4/jquery.min.js
@@ -12,6 +12,7 @@
 // @include      https://www.elmundo.es/*
 // @include      https://www.telecinco.es/*
 // @include      https://www.mediaset.es/*
+// @include      https://www.divinity.es/*
 // @include      https://www.cuatro.com/*
 // @grant        none
 // ==/UserScript==
@@ -44,6 +45,9 @@
                 runScriptForPage(nombreFn);
                 break;
             case "cuatro.com":
+                runScriptForPage(nombreFn);
+                break;
+            case "divinity.es":
                 runScriptForPage(nombreFn);
                 break;
             default:
@@ -84,7 +88,12 @@
         function telecinco() {
             $("#pageMultisite").remove();
         }
+
         function mediaset() {
+            $("#pageMultisite").remove();
+        }
+
+        function divinity() {
             $("#pageMultisite").remove();
         }
 
