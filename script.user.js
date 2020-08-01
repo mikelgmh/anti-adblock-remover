@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Quitar avisos Adblock
 // @namespace    http://tampermonkey.net/
-// @version      0.11
+// @version      0.12
 // @description  Elimina los avisos de Adblock.
 // @author       Mikel Granero
 // @require      https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.4/jquery.min.js
@@ -13,10 +13,12 @@
 // @grant        none
 // ==/UserScript==
 
+// Una parte del bloqueador de El País y El Mundo son del autor "Zequi"
+// https://greasyfork.org/es/scripts/393417-el-pa%C3%ADs-cleaned-page-sin-l%C3%ADmite-de-noticias
+
 (function () {
     'use strict';
-    $(document).ready(function () {
-        var id = makeid(); // Crea una ID cada vez que se entra en una página para evitar tumbar este script.
+    $(document).ready(function () { // Crea una ID cada vez que se entra en una página para evitar tumbar este script.
         var periodico = window.location.hostname.replace(/^(?:https?:\/\/)?(?:www\.)?/i, "").split('/')[0]; // Elimina http,https,wwww de la url
         switch (periodico) {
             case "elespanol.com":
@@ -48,50 +50,49 @@
         }
 
         function elMundo() {
-            // CABECERA
-            $(".ue-c-seo-links-container").remove();
+            // GRACIAS A ZEQUI https://greasyfork.org/es/users/413001-zequi
+            $(".ue-c-seo-links-container").remove(); // CABECERA
             // PORTADA
             $(".ue-c-newsletter-widget").remove(); // modulo de newsletter
-            //$(".ue-c-cover-content__byline-list").remove(); // nombre del periodista en cada noticia
             $(".ue-c-cover-content__byline-name").remove();
             $(".servicios_vwo").remove(); //módulos de servicios
             $(".ue-c-cover-content__icon-premium").parent().parent().css("background-color", "#edab3b").css("opacity", "0.4"); //marca visualmente las noticias de pago
-            // PageNOTICIA > post-CUERPO
             $(".ue-c-article__trust").remove(); // seccion TrustProject
         }
 
         function elEspanol() {
             // Elimina modales que impiden scroll y que piden desactivar Adblock
             $(".tp-iframe-wrapper").remove();
-            $(".tp-iframe-wrapper").remove();
             $(".tp-modal").remove();
             $("#megasuperior").remove(); // Un espacio en blanco enorme que no viene a cuento
         }
 
         function elCorreo() {
+            var id = makeid(8);
             $(".wrapper voc-story").addClass(id); // Añade id única al wrapper
             $("." + id).removeClass("wrapper voc-story"); // Elimina la clase wrapper para confundir al script
         }
 
         function elPais() {
+            // GRACIAS A ZEQUI https://greasyfork.org/es/users/413001-zequi
             // Trucar el número de noticias gratis por mes
             var aa = JSON.parse(localStorage.getItem('ArcP'));
             aa.anonymous.rc["8"].c = -11;
             localStorage.setItem('ArcP', JSON.stringify(aa));
             // CABECERA
-            $(".editions").remove(); //links a otras ediciones/idiomas: inglés/catalán/...
-            $(".subscribe").remove(); //botón Subscribirse al lado del botón login
+            $(".subscribe").remove(); // Botón Subscribirse al lado del botón login
             // PORTADA
             $(".classifieds_widget").remove();  //modulo de publicidad
             $("classifieds_widget").remove();  //modulo de servicios
             // PageNOTICIA > pre-CUERPO
             $(".f_c span.f_a").remove(); //en las imágenes, en el pie de foto se quita nombre del fotógrafo o agencia
-            // PageNOTICIA > post-CUERPO
             $(".a_tp").remove(); // seccion TrustProject
             $(".w_h_l").remove(); // en seccion comentarios, eliminar link a "normas"
             $(".divFlex").remove(); // Quitar contador de noticias gratis
         }
 
+        // Esta función es imprescindible para páginas como el correo.
+        // Crea una ID única por cada carga de una página para que las páginas no detecten este script.
         function makeid(length) {
             var result = '';
             var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
