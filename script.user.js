@@ -10,6 +10,7 @@
 // @include      https://elpais.com/*
 // @include      https://www.elcorreo.com/*
 // @include      https://www.elmundo.es/*
+// @include      https://www.telecinco.es/*
 // @grant        none
 // ==/UserScript==
 
@@ -19,37 +20,36 @@
 (function () {
     'use strict';
     $(document).ready(function () { // Crea una ID cada vez que se entra en una página para evitar tumbar este script.
-        var periodico = window.location.hostname.replace(/^(?:https?:\/\/)?(?:www\.)?/i, "").split('/')[0]; // Elimina http,https,wwww de la url
-        switch (periodico) {
+        var urlPeriodico = window.location.hostname.replace(/^(?:https?:\/\/)?(?:www\.)?/i, "").split('/')[0]; // Elimina http,https,wwww de la url
+        var nombreFn = urlPeriodico.substring(0, urlPeriodico.lastIndexOf("."));
+        switch (urlPeriodico) {
             case "elespanol.com":
-                setTimeout(elEspanol, 200);
-                setTimeout(elEspanol, 500);
-                setTimeout(elEspanol, 900);
-                setTimeout(elEspanol, 1400);
+                runScriptForPage(nombreFn);
                 break;
             case "elpais.com":
-                setTimeout(elPais, 200);
-                setTimeout(elPais, 500);
-                setTimeout(elPais, 900);
-                setTimeout(elPais, 1400);
+                runScriptForPage(nombreFn);
                 break;
             case "elcorreo.com":
-                setTimeout(elCorreo, 200);
-                setTimeout(elCorreo, 500);
-                setTimeout(elCorreo, 900);
-                setTimeout(elCorreo, 1400);
+                runScriptForPage(nombreFn);
                 break;
             case "elmundo.es":
-                setTimeout(elMundo, 200);
-                setTimeout(elMundo, 500);
-                setTimeout(elMundo, 900);
-                setTimeout(elMundo, 1400);
+                runScriptForPage(nombreFn);
+                break;
+            case "telecinco.es":
+                runScriptForPage(nombreFn);
                 break;
             default:
-            // code block
         }
 
-        function elMundo() {
+        function runScriptForPage(funcName) {
+            setTimeout(eval(funcName + "()"), 200);
+            setTimeout(eval(funcName + "()"), 500);
+            setTimeout(eval(funcName + "()"), 900);
+            setTimeout(eval(funcName + "()"), 1400);
+        }
+
+
+        function elmundo() {
             // GRACIAS A ZEQUI https://greasyfork.org/es/users/413001-zequi
             $(".ue-c-seo-links-container").remove(); // CABECERA
             // PORTADA
@@ -60,20 +60,24 @@
             $(".ue-c-article__trust").remove(); // seccion TrustProject
         }
 
-        function elEspanol() {
+        function elespanol() {
             // Elimina modales que impiden scroll y que piden desactivar Adblock
             $(".tp-iframe-wrapper").remove();
             $(".tp-modal").remove();
             $("#megasuperior").remove(); // Un espacio en blanco enorme que no viene a cuento
         }
 
-        function elCorreo() {
+        function elcorreo() {
             var id = makeid(8);
             $(".wrapper voc-story").addClass(id); // Añade id única al wrapper
             $("." + id).removeClass("wrapper voc-story"); // Elimina la clase wrapper para confundir al script
         }
 
-        function elPais() {
+        function telecinco() {
+            $("#pageMultisite").remove();
+        }
+
+        function elpais() {
             // GRACIAS A ZEQUI https://greasyfork.org/es/users/413001-zequi
             // Trucar el número de noticias gratis por mes
             var aa = JSON.parse(localStorage.getItem('ArcP'));
