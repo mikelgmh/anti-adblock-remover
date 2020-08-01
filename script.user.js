@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Quitar avisos Adblock
 // @namespace    http://tampermonkey.net/
-// @version      0.16
+// @version      0.20
 // @description  Elimina los avisos de Adblock.
 // @author       Mikel Granero
 // @require      https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.4/jquery.min.js
@@ -14,6 +14,8 @@
 // @include      https://www.mediaset.es/*
 // @include      https://www.divinity.es/*
 // @include      https://www.cuatro.com/*
+// @include      https://www.energytv.es/*
+// @include      https://www.factoriadeficcion.com/*
 // @grant        none
 // ==/UserScript==
 
@@ -39,16 +41,22 @@
                 runScriptForPage(nombreFn);
                 break;
             case "telecinco.es":
-                runScriptForPage(nombreFn);
+                runScriptForPage("mediaset");
                 break;
             case "mediaset.es":
-                runScriptForPage(nombreFn);
+                runScriptForPage("mediaset");
                 break;
             case "cuatro.com":
-                runScriptForPage(nombreFn);
+                runScriptForPage("mediaset");
+                break;
+            case "factoriadeficcion.com":
+                runScriptForPage("mediaset");
                 break;
             case "divinity.es":
-                runScriptForPage(nombreFn);
+                runScriptForPage("mediaset");
+                break;
+            case "energytv.es":
+                runScriptForPage("mediaset");
                 break;
             default:
         }
@@ -85,21 +93,10 @@
             $("." + id).removeClass("wrapper voc-story"); // Elimina la clase wrapper para confundir al script
         }
 
-        function telecinco() {
-            $("#pageMultisite").remove();
-        }
-
         function mediaset() {
             $("#pageMultisite").remove();
         }
 
-        function divinity() {
-            $("#pageMultisite").remove();
-        }
-
-        function cuatro() {
-            $("#pageMultisite").remove();
-        }
 
         function elpais() {
             // GRACIAS A ZEQUI https://greasyfork.org/es/users/413001-zequi
