@@ -10,7 +10,8 @@ Elimina los avisos para deshabilitar el Adblock en diferentes periódicos Españ
 - El Correo
 - Telecinco
 - Cuatro
-- Mediaset
+- Mediaset (Energy, Divinity, Cuatro, Telecinco...)
+- Diario de Navarra
 
 ## Instalación
 

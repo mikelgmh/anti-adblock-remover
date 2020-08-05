@@ -88,7 +88,7 @@
             $(".ue-c-article__trust").remove(); // seccion TrustProject
         }
 
-        function eldiariodenavarra() {
+        function diariodenavarra() {
             $('#tLogo').next('div').remove();
         }
 
