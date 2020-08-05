@@ -19,6 +19,7 @@
 // @include      https://www.libertaddigital.com/*
 // @include      https://www.diariodenavarra.es/*
 // @include      https://www.lasprovincias.es/*
+// @include      https://www.eldigitaldealbacete.com/*
 // @grant        none
 // ==/UserScript==
 
