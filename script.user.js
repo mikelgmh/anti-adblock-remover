@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Quitar avisos Adblock
 // @namespace    http://tampermonkey.net/
-// @version      0.24
+// @version      0.25
 // @description  Elimina los avisos de Adblock.
 // @author       Mikel Granero
 // @require      https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.4/jquery.min.js
@@ -18,6 +18,7 @@
 // @include      https://www.factoriadeficcion.com/*
 // @include      https://www.libertaddigital.com/*
 // @include      https://www.diariodenavarra.es/*
+// @include      https://www.lasprovincias.es/*
 // @grant        none
 // ==/UserScript==
 
@@ -66,6 +67,9 @@
             case "diariodenavarra.es":
                 runScriptForPage(nombreFn);
                 break;
+            case "lasprovincias.es":
+                runScriptForPage(nombreFn);
+                break;
             default:
         }
 
@@ -77,6 +81,10 @@
             // 4 veces porque hay veces que los avisos salen pelín más tarde.
         }
 
+        function lasprovincias() {
+            // Usa la misma app que El Correo
+            elcorreo();
+        }
 
         function elmundo() {
             // GRACIAS A ZEQUI https://greasyfork.org/es/users/413001-zequi
