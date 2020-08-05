@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Quitar avisos Adblock
 // @namespace    http://tampermonkey.net/
-// @version      0.22
+// @version      0.23
 // @description  Elimina los avisos de Adblock.
 // @author       Mikel Granero
 // @require      https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.4/jquery.min.js
@@ -17,6 +17,7 @@
 // @include      https://www.energytv.es/*
 // @include      https://www.factoriadeficcion.com/*
 // @include      https://www.libertaddigital.com/*
+// @include      https://www.diariodenavarra.es/*
 // @grant        none
 // ==/UserScript==
 
@@ -62,6 +63,9 @@
             case "libertaddigital.com":
                 runScriptForPage(nombreFn);
                 break;
+            case "diariodenavarra.es":
+                runScriptForPage(nombreFn);
+                break;
             default:
         }
 
@@ -82,6 +86,10 @@
             $(".servicios_vwo").remove(); //módulos de servicios
             $(".ue-c-cover-content__icon-premium").parent().parent().css("background-color", "#edab3b").css("opacity", "0.4"); //marca visualmente las noticias de pago
             $(".ue-c-article__trust").remove(); // seccion TrustProject
+        }
+
+        function eldiariodenavarra() {
+            $('#tLogo').next('div').remove();
         }
 
         function elespanol() {
