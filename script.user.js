@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Quitar avisos Adblock
 // @namespace    http://tampermonkey.net/
-// @version      0.23
+// @version      0.24
 // @description  Elimina los avisos de Adblock.
 // @author       Mikel Granero
 // @require      https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.4/jquery.min.js
@@ -26,10 +26,10 @@
 
 (function () {
     'use strict';
-    $(document).ready(function () { // Crea una ID cada vez que se entra en una página para evitar tumbar este script.
+    $(document).ready(function () {
         var urlPeriodico = window.location.hostname.replace(/^(?:https?:\/\/)?(?:www\.)?/i, "").split('/')[0]; // Elimina http,https,wwww de la url
-        var nombreFn = urlPeriodico.substring(0, urlPeriodico.lastIndexOf("."));
-        switch (urlPeriodico) {
+        var nombreFn = urlPeriodico.substring(0, urlPeriodico.lastIndexOf(".")); // Recoge el nombre del periódico en minúsculas, que es el nombre de las funciones
+        switch (urlPeriodico) { // Switch case por si hay que añadir código distinto para cada periódico o hacer modificaciones específicas
             case "elespanol.com":
                 runScriptForPage(nombreFn);
                 break;
@@ -69,11 +69,12 @@
             default:
         }
 
-        function runScriptForPage(funcName) {
+        function runScriptForPage(funcName) { // Ejecuta 4 veces la función para la página especificada en el parámetro.
             setTimeout(eval(funcName + "()"), 200);
             setTimeout(eval(funcName + "()"), 500);
             setTimeout(eval(funcName + "()"), 900);
             setTimeout(eval(funcName + "()"), 1400);
+            // 4 veces porque hay veces que los avisos salen pelín más tarde.
         }
 
 
@@ -89,6 +90,7 @@
         }
 
         function diariodenavarra() {
+            // Como este periódico genera una ID única para que no pueda borrar el popup, selecciono el div que hay justo arriba con la id 'tLogo' y elimino el siguiente.
             $('#tLogo').next('div').remove();
         }
 
