@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Quitar avisos Adblock
 // @namespace    http://tampermonkey.net/
-// @version      0.25
+// @version      0.26
 // @description  Elimina los avisos de Adblock.
 // @author       Mikel Granero
 // @require      https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.4/jquery.min.js
@@ -72,6 +72,7 @@
                 break;
             default:
         }
+        $("#onesignal-slidedown-container").remove(); // Elimina las notificaciones para que actives las notificaciones del navegador.
 
         function runScriptForPage(funcName) { // Ejecuta 4 veces la función para la página especificada en el parámetro.
             setTimeout(eval(funcName + "()"), 200);
