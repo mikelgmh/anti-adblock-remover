@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Quitar avisos Adblock
 // @namespace    http://tampermonkey.net/
-// @version      0.30
+// @version      0.31
 // @description  Elimina los avisos de Adblock.
 // @author       Mikel Granero
 // @require      https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.4/jquery.min.js
@@ -127,6 +127,8 @@
             $("." + id).removeClass("wrapper voc-story"); // Elimina la clase wrapper para confundir al script
             $("#onesignal-slidedown-container").remove(); // Elimina las notificaciones para que actives las notificaciones del navegador.
             $("#didomi-host").remove(); // Elimina la notificación de aceptar cookies en algunas páginas.
+            $("#elcorreo-analitica").remove(); // Elimina la notificación de aceptar cookies en algunas páginas.
+            $(".modal-dialog").remove(); // Elimina la notificación de aceptar cookies en algunas páginas.
         }
 
         function mediaset() {
