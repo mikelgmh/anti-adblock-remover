@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Quitar avisos Adblock
 // @namespace    http://tampermonkey.net/
-// @version      0.29
+// @version      0.30
 // @description  Elimina los avisos de Adblock.
 // @author       Mikel Granero
 // @require      https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.4/jquery.min.js
@@ -77,14 +77,14 @@
                 break;
             default:
         }
-        $("#onesignal-slidedown-container").remove(); // Elimina las notificaciones para que actives las notificaciones del navegador.
-        $("#didomi-host").remove(); // Elimina la notificación de aceptar cookies en algunas páginas.
+
 
         function runScriptForPage(funcName) { // Ejecuta 4 veces la función para la página especificada en el parámetro.
             setTimeout(eval(funcName + "()"), 200);
             setTimeout(eval(funcName + "()"), 500);
             setTimeout(eval(funcName + "()"), 900);
             setTimeout(eval(funcName + "()"), 1400);
+
             // 4 veces porque hay veces que los avisos salen pelín más tarde.
         }
 
@@ -125,6 +125,8 @@
             var id = makeid(8);
             $(".wrapper voc-story").addClass(id); // Añade id única al wrapper
             $("." + id).removeClass("wrapper voc-story"); // Elimina la clase wrapper para confundir al script
+            $("#onesignal-slidedown-container").remove(); // Elimina las notificaciones para que actives las notificaciones del navegador.
+            $("#didomi-host").remove(); // Elimina la notificación de aceptar cookies en algunas páginas.
         }
 
         function mediaset() {
