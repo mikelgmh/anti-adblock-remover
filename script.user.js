@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Quitar avisos Adblock
 // @namespace    http://tampermonkey.net/
-// @version      0.28
+// @version      0.29
 // @description  Elimina los avisos de Adblock.
 // @author       Mikel Granero
 // @require      https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.4/jquery.min.js
@@ -20,6 +20,7 @@
 // @include      https://www.diariodenavarra.es/*
 // @include      https://www.lasprovincias.es/*
 // @include      https://www.eldigitaldealbacete.com/*
+// @include      https://www.elnortedecastilla.es/*
 // @grant        none
 // ==/UserScript==
 
@@ -71,6 +72,9 @@
             case "lasprovincias.es":
                 runScriptForPage(nombreFn);
                 break;
+            case "elnortedecastilla.es":
+                runScriptForPage(nombreFn);
+                break;
             default:
         }
         $("#onesignal-slidedown-container").remove(); // Elimina las notificaciones para que actives las notificaciones del navegador.
@@ -85,6 +89,11 @@
         }
 
         function lasprovincias() {
+            // Usa la misma app que El Correo
+            elcorreo();
+        }
+
+        function elnortedecastilla() {
             // Usa la misma app que El Correo
             elcorreo();
         }

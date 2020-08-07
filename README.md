@@ -13,6 +13,7 @@ Elimina los avisos para deshabilitar el Adblock en diferentes periódicos Españ
 - Mediaset (Energy, Divinity, Cuatro, Telecinco...)
 - Diario de Navarra
 - Las Provincias
+- El Norte de Castilla
 
 ## Instalación
 
