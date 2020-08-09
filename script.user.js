@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Quitar avisos Adblock
 // @namespace    http://tampermonkey.net/
-// @version      0.31
+// @version      0.32
 // @description  Elimina los avisos de Adblock.
 // @author       Mikel Granero
 // @require      https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.4/jquery.min.js
@@ -118,6 +118,7 @@
             // Elimina modales que impiden scroll y que piden desactivar Adblock
             $(".tp-iframe-wrapper").remove();
             $(".tp-modal").remove();
+            $(".tp-backdrop").remove();
             $("#megasuperior").remove(); // Un espacio en blanco enorme que no viene a cuento
         }
 
