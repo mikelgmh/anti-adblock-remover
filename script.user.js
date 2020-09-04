@@ -172,7 +172,6 @@
             $("#acceptationCMPWall").remove(); // Quitar contador de noticias gratis
             $("#didomi-host").remove(); // Quitar contador de noticias gratis
             $(".fc-ab-root").remove(); // Quitar contador de noticias gratis
-            alert("muy bien");
             $("body").css("overflow", "");
 
         }
