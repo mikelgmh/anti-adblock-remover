@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Quitar avisos Adblock
 // @namespace    http://tampermonkey.net/
-// @version      0.32
+// @version      0.33
 // @description  Elimina los avisos de Adblock.
 // @author       Mikel Granero
 // @require      https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.4/jquery.min.js
@@ -75,6 +75,9 @@
             case "elnortedecastilla.es":
                 runScriptForPage(nombreFn);
                 break;
+            case "diariosur.es":
+                runScriptForPage(nombreFn);
+                break;
             default:
         }
 
@@ -86,6 +89,10 @@
             setTimeout(eval(funcName + "()"), 1400);
 
             // 4 veces porque hay veces que los avisos salen pelín más tarde.
+        }
+
+        function diariosur() {
+            elcorreo();
         }
 
         function lasprovincias() {
