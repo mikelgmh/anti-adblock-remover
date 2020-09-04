@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Quitar avisos Adblock
 // @namespace    http://tampermonkey.net/
-// @version      0.36
+// @version      0.38
 // @description  Elimina los avisos de Adblock.
 // @author       Mikel Granero
 // @require      https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.4/jquery.min.js
@@ -22,6 +22,7 @@
 // @include      https://www.eldigitaldealbacete.com/*
 // @include      https://www.elnortedecastilla.es/*
 // @include      https://www.diariosur.es/*
+// @include      https://andaluciainformacion.es/*
 // @grant        none
 // ==/UserScript==
 
@@ -79,6 +80,9 @@
             case "diariosur.es":
                 runScriptForPage(nombreFn);
                 break;
+            case "andaluciainformacion.es":
+                runScriptForPage(nombreFn);
+                break;
             default:
         }
 
@@ -88,9 +92,19 @@
                 setTimeout(eval(funcName + "()"), 200);
                 setTimeout(eval(funcName + "()"), 500);
                 setTimeout(eval(funcName + "()"), 900);
-                setTimeout(eval(funcName + "()"), 1400);
+                setTimeout(eval(funcName + "()"), 3000);
                 // 4 veces porque hay veces que los avisos salen pelín más tarde.
             }, false);
+        }
+
+        function andaluciainformacion() {
+            $("#onesignal-slidedown-container").remove();
+            $(".qc-cmp-ui-container").remove();
+            $("body").removeClass("qc-cmp-showing");
+            $("#modal-adblock").remove();
+            $(".paginador").remove();
+            $(".modal-overlay").remove();
+            $("body").css("overflow", "visible");
         }
 
         function diariosur() {
@@ -116,6 +130,7 @@
             $(".servicios_vwo").remove(); //módulos de servicios
             $(".ue-c-cover-content__icon-premium").parent().parent().css("background-color", "#edab3b").css("opacity", "0.4"); //marca visualmente las noticias de pago
             $(".ue-c-article__trust").remove(); // seccion TrustProject
+
         }
 
         function diariodenavarra() {

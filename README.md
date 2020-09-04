@@ -14,6 +14,8 @@ Elimina los avisos para deshabilitar el Adblock en diferentes periódicos Españ
 - Diario de Navarra
 - Las Provincias
 - El Norte de Castilla
+- Diario Sur
+- Andalucía Información
 
 ## Instalación
 
