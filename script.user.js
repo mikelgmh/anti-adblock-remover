@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Quitar avisos Adblock
 // @namespace    http://tampermonkey.net/
-// @version      0.33
+// @version      0.36
 // @description  Elimina los avisos de Adblock.
 // @author       Mikel Granero
 // @require      https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.4/jquery.min.js
@@ -84,12 +84,13 @@
 
 
         function runScriptForPage(funcName) { // Ejecuta 4 veces la función para la página especificada en el parámetro.
-            setTimeout(eval(funcName + "()"), 200);
-            setTimeout(eval(funcName + "()"), 500);
-            setTimeout(eval(funcName + "()"), 900);
-            setTimeout(eval(funcName + "()"), 1400);
-
-            // 4 veces porque hay veces que los avisos salen pelín más tarde.
+            window.addEventListener('load', function () {
+                setTimeout(eval(funcName + "()"), 200);
+                setTimeout(eval(funcName + "()"), 500);
+                setTimeout(eval(funcName + "()"), 900);
+                setTimeout(eval(funcName + "()"), 1400);
+                // 4 veces porque hay veces que los avisos salen pelín más tarde.
+            }, false);
         }
 
         function diariosur() {
@@ -128,6 +129,8 @@
             $(".tp-modal").remove();
             $(".tp-backdrop").remove();
             $("#megasuperior").remove(); // Un espacio en blanco enorme que no viene a cuento
+            $(".flocktory-widget-overlay").remove(); // Un espacio en blanco enorme que no viene a cuento
+            $(".main-story").removeClass("tp-modal-open");
         }
 
         function elcorreo() {
@@ -166,6 +169,12 @@
             $(".a_tp").remove(); // seccion TrustProject
             $(".w_h_l").remove(); // en seccion comentarios, eliminar link a "normas"
             $(".divFlex").remove(); // Quitar contador de noticias gratis
+            $("#acceptationCMPWall").remove(); // Quitar contador de noticias gratis
+            $("#didomi-host").remove(); // Quitar contador de noticias gratis
+            $(".fc-ab-root").remove(); // Quitar contador de noticias gratis
+            alert("muy bien");
+            $("body").css("overflow", "");
+
         }
 
         // Esta función es imprescindible para páginas como el correo.
