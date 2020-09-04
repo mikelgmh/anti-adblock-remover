@@ -21,6 +21,7 @@
 // @include      https://www.lasprovincias.es/*
 // @include      https://www.eldigitaldealbacete.com/*
 // @include      https://www.elnortedecastilla.es/*
+// @include      https://www.diariosur.es/*
 // @grant        none
 // ==/UserScript==
 
