@@ -239,7 +239,7 @@
         });
     } */
 
-    function changeDOM(namesList, action, type) {
+    function changeDOM(namesList, action, type, data) {
         var elementList = [];
         switch (type) { // Switch case por si hay que añadir código distinto para cada periódico o hacer modificaciones específicas
             case "id":
@@ -273,10 +273,10 @@
                 removeElement(elementList);
                 break;
             case "removeClass":
-
+                removeClass(data.className);
                 break;
             case "css":
-
+                changeCSS(data.css);
                 break;
             default:
         }
@@ -287,6 +287,16 @@
     function removeElement(elementList) {
         elementList.forEach(element => {
             element.parentNode.removeChild(element)
+        });
+    }
+    function changeCSS(elementList, css) {
+        elementList.forEach(element => {
+            element.parentNode.style.css[property] = css[value]
+        });
+    }
+    function removeClass(elementList, className) {
+        elementList.forEach(element => {
+            element.classList.remove(className);
         });
     }
 
