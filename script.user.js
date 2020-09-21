@@ -214,7 +214,7 @@
         return result;
     }
 
-    function removeElementById(names) {
+    /* function removeElementById(names) {
         var elementList = stringToArray(names);
         elementList.forEach(element => {
             var elem = document.querySelector('#' + element);
@@ -237,21 +237,57 @@
             var elements = document.getElementsByTagName(element)
             while (elements[0]) elements[0].parentNode.removeChild(elements[0])
         });
-    }
+    } */
 
     function changeDOM(namesList, action, type) {
+        var elementList = [];
         switch (type) { // Switch case por si hay que añadir código distinto para cada periódico o hacer modificaciones específicas
             case "id":
-                //
+                var elementListStrings = stringToArray(namesList);
+                elementListStrings.forEach(element => {
+                    var elem = document.querySelector('#' + element);
+                    elementList.push(elem);
+                    //elem.parentNode.removeChild(elem);
+                });
                 break;
             case "class":
-                //              
+                var elementListStrings = stringToArray(namesList);
+                elementListStrings.forEach(element => {
+                    var elements = document.getElementsByClassName(element);
+                    while (elements.length > 0) {
+                        elementList.push(elements[0]);
+                    }
+                });
                 break;
             case "tag":
-                //              
+                var elementListNames = stringToArray(namesList);
+                elementListNames.forEach(element => {
+                    var elements = document.getElementsByTagName(element)
+                    while (elements[0]) elementList.push(elements[0]);
+                });
                 break;
             default:
         }
+        switch (action) { // Switch case por si hay que añadir código distinto para cada periódico o hacer modificaciones específicas
+            case "remove":
+                removeElement(elementList);
+                break;
+            case "removeClass":
+
+                break;
+            case "css":
+
+                break;
+            default:
+        }
+
+
+    }
+
+    function removeElement(elementList) {
+        elementList.forEach(element => {
+            element.parentNode.removeChild(element)
+        });
     }
 
     function stringToArray(string) {
