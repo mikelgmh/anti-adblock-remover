@@ -9,6 +9,7 @@
 // @include      https://www.elespanol.com/*
 // @include      https://elpais.com/*
 // @include      https://www.elcorreo.com/*
+// @include      https://www.diariovasco.com/*
 // @include      https://www.elmundo.es/*
 // @include      https://www.telecinco.es/*
 // @include      https://www.mediaset.es/*
@@ -42,6 +43,9 @@
                 runScriptForPage(nombreFn);
                 break;
             case "elcorreo.com":
+                runScriptForPage(nombreFn);
+                break;
+            case "diariovasco.com":
                 runScriptForPage(nombreFn);
                 break;
             case "elmundo.es":
@@ -156,6 +160,11 @@
             $("#didomi-host").remove(); // Elimina la notificación de aceptar cookies en algunas páginas.
             $("#elcorreo-analitica").remove(); // Elimina la notificación de aceptar cookies en algunas páginas.
             $(".modal-dialog").remove(); // Elimina la notificación de aceptar cookies en algunas páginas.
+        }
+        function diariovasco() {
+            var id = makeid(8);
+            $(".wrapper voc-story").addClass(id); // Añade id única al wrapper
+            $("." + id).removeClass("wrapper voc-story"); // Elimina la clase wrapper para confundir al script
         }
 
         function mediaset() {
