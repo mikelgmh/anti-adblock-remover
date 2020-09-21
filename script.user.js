@@ -199,6 +199,9 @@
 
     }
 
+
+    // FUNCIONES PARA EL CORRECTO FUNCIONAMIENTO DEL SCRIPT
+
     // Esta función es imprescindible para páginas como el correo.
     // Crea una ID única por cada carga de una página para que las páginas no detecten este script.
     function makeid(length) {
@@ -209,6 +212,53 @@
             result += characters.charAt(Math.floor(Math.random() * charactersLength));
         }
         return result;
+    }
+
+    function removeElementById(names) {
+        var elementList = stringToArray(names);
+        elementList.forEach(element => {
+            var elem = document.querySelector('#' + element);
+            elem.parentNode.removeChild(elem);
+        });
+    }
+
+    function removeElementByClassName(names) {
+        var elementList = stringToArray(names);
+        elementList.forEach(element => {
+            var elements = document.getElementsByClassName(element);
+            while (elements.length > 0) {
+                elements[0].parentNode.removeChild(elements[0]);
+            }
+        });
+    }
+    function removeElementByTagName(names) {
+        var elementList = stringToArray(names);
+        elementList.forEach(element => {
+            var elements = document.getElementsByTagName(element)
+            while (elements[0]) elements[0].parentNode.removeChild(elements[0])
+        });
+    }
+
+    function changeDOM(namesList, action, type) {
+        switch (type) { // Switch case por si hay que añadir código distinto para cada periódico o hacer modificaciones específicas
+            case "id":
+                //
+                break;
+            case "class":
+                //              
+                break;
+            case "tag":
+                //              
+                break;
+            default:
+        }
+    }
+
+    function stringToArray(string) {
+        var arr = str.split(",").map(function (item) {
+            return item.trim();
+        });
+        return arr;
     }
 
 
