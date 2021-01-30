@@ -2,7 +2,7 @@
 // @name         Quitar avisos Adblock
 // @run-at        document-start
 // @namespace    http://tampermonkey.net/
-// @version      0.39
+// @version      0.40
 // @description  Elimina los avisos de Adblock.
 // @author       Mikel Granero
 // @require      https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.4/jquery.min.js
@@ -25,6 +25,7 @@
 // @include      https://www.elnortedecastilla.es/*
 // @include      https://www.diariosur.es/*
 // @include      https://andaluciainformacion.es/*
+// @include      https://www.lavanguardia.com/*
 // @grant        none
 // ==/UserScript==
 
@@ -88,6 +89,9 @@
         case "andaluciainformacion.es":
             runScriptForPage(nombreFn);
             break;
+        case "lavanguardia.com":
+            runScriptForPage(nombreFn);
+            break;
         default:
     }
 
@@ -110,6 +114,11 @@
         $(".paginador").remove();
         $(".modal-overlay").remove();
         $("body").css("overflow", "visible");
+    }
+
+    function lavanguardia() {
+        $(".ev-open-modal-paywall-REQUIRE_LOGIN").remove();
+        $(".modal").remove();
     }
 
     function diariosur() {
@@ -162,6 +171,7 @@
         $("#elcorreo-analitica").remove(); // Elimina la notificación de aceptar cookies en algunas páginas.
         $(".modal-dialog").remove(); // Elimina la notificación de aceptar cookies en algunas páginas.
     }
+
     function diariovasco() {
         var id = makeid(8);
         $(".wrapper voc-story").addClass(id); // Añade id única al wrapper
@@ -187,8 +197,8 @@
         // CABECERA
         $(".subscribe").remove(); // Botón Subscribirse al lado del botón login
         // PORTADA
-        $(".classifieds_widget").remove();  //modulo de publicidad
-        $("classifieds_widget").remove();  //modulo de servicios
+        $(".classifieds_widget").remove(); //modulo de publicidad
+        $("classifieds_widget").remove(); //modulo de servicios
         // PageNOTICIA > pre-CUERPO
         $(".f_c span.f_a").remove(); //en las imágenes, en el pie de foto se quita nombre del fotógrafo o agencia
         $(".a_tp").remove(); // seccion TrustProject
@@ -212,6 +222,7 @@
         }
         return result;
     }
+
 
     //});
 
