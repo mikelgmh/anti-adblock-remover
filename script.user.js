@@ -1,9 +1,9 @@
 // ==UserScript==
-// @name         Quitar avisos Adblock
+// @name         Spanish Press anti-adblock blocker
 // @run-at        document-start
 // @namespace    http://tampermonkey.net/
 // @version      0.40
-// @description  Elimina los avisos de Adblock.
+// @description  Elimina los avisos molestos que muestran los periódicos para que desactives adblock. También permite leer artículos de manera ilimitada para algunas páginas.
 // @author       Mikel Granero
 // @require      https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.4/jquery.min.js
 // @updateURL    https://github.com/mikelgmh/anti-adblock-remover/raw/master/script.user.js
