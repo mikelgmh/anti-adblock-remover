@@ -2,7 +2,7 @@
 // @name         Spanish Press anti-adblock blocker
 // @run-at        document-start
 // @namespace    http://tampermonkey.net/
-// @version      0.42
+// @version      0.43
 // @description  Elimina los avisos molestos que muestran los periódicos para que desactives adblock. También permite leer artículos de manera ilimitada para algunas páginas.
 // @author       Mikel Granero
 // @require      https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.4/jquery.min.js
@@ -159,6 +159,8 @@
         $(".md-suscription").remove();
         $("#megasuperior").remove(); // Un espacio en blanco enorme que no viene a cuento
         $("#gallerynews_footer").remove(); // Un espacio en blanco enorme que no viene a cuento
+        $("#didomi-notice").remove();
+        $("#sticky_container").remove();
         $(".flocktory-widget-overlay").remove(); // Un espacio en blanco enorme que no viene a cuento
         $(".main-story").removeClass("tp-modal-open");
     }
