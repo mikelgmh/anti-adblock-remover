@@ -146,6 +146,7 @@
         $(".ue-c-cover-content__byline-name").remove();
         $(".servicios_vwo").remove(); //módulos de servicios
         $(".ue-c-cover-content__icon-premium").parent().parent().css("background-color", "#edab3b").css("opacity", "0.4"); //marca visualmente las noticias de pago
+        $(".ue-c-cover-content__icon-premium").parent().parent().css("text-decoration", "line-through"); //Tacha los títulos de pago
         $(".ue-c-article__trust").remove(); // seccion TrustProject
 
     }
