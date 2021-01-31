@@ -2,7 +2,7 @@
 // @name         Spanish Press anti-adblock blocker
 // @run-at        document-start
 // @namespace    http://tampermonkey.net/
-// @version      0.44
+// @version      0.45
 // @description  Elimina los avisos molestos que muestran los periódicos para que desactives adblock. También permite leer artículos de manera ilimitada para algunas páginas.
 // @author       Mikel Granero
 // @require      https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.4/jquery.min.js
@@ -24,6 +24,7 @@
 // @include      https://www.eldigitaldealbacete.com/*
 // @include      https://www.elnortedecastilla.es/*
 // @include      https://www.diariosur.es/*
+// @include      https://www.lavozdegalicia.es/*
 // @include      https://andaluciainformacion.es/*
 // @include      https://www.lavanguardia.com/*
 // @grant        none
@@ -89,6 +90,9 @@
             runScriptForPage(nombreFn);
             break;
         case "lavanguardia.com":
+            runScriptForPage(nombreFn);
+            break;
+        case "lavozdegalicia.es":
             runScriptForPage(nombreFn);
             break;
         default:
@@ -198,6 +202,11 @@
     function libertaddigital() {
         $(".jquery-modal blocker current").remove();
         $(".portada scrolled").removeAttr("style")
+    }
+
+    function lavozdegalicia() {
+        $(".cierre").parent().css("background-color", "#ff7575a3");
+        $(".cierre").children(".content_wrapper").children("h2").children("a").css("text-decoration", "line-through");
     }
 
 
