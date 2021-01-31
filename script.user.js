@@ -171,6 +171,7 @@
         $("#didomi-host").remove(); // Elimina la notificación de aceptar cookies en algunas páginas.
         $("#elcorreo-analitica").remove(); // Elimina la notificación de aceptar cookies en algunas páginas.
         $(".modal-dialog").remove(); // Elimina la notificación de aceptar cookies en algunas páginas.
+        $(".voc-animated-modal-bottom").remove(); // Elimina la notificación de aceptar cookies en algunas páginas.
     }
 
     function diariovasco() {
