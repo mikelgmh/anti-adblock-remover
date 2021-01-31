@@ -172,6 +172,15 @@
         $("#elcorreo-analitica").remove(); // Elimina la notificación de aceptar cookies en algunas páginas.
         $(".modal-dialog").remove(); // Elimina la notificación de aceptar cookies en algunas páginas.
         $(".voc-animated-modal-bottom").remove(); // Elimina la notificación de aceptar cookies en algunas páginas.
+        if ($('body').css('overflow') == "hidden") {
+            $('body').css('overflow', 'auto');
+
+        }
+
+        if ($('body').children().first().css("position") == "fixed") {
+            $('body').children().first().remove();
+        }
+
     }
 
     function diariovasco() {
