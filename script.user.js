@@ -2,7 +2,7 @@
 // @name         Spanish Press anti-adblock blocker
 // @run-at        document-start
 // @namespace    http://tampermonkey.net/
-// @version      0.40
+// @version      0.41
 // @description  Elimina los avisos molestos que muestran los periódicos para que desactives adblock. También permite leer artículos de manera ilimitada para algunas páginas.
 // @author       Mikel Granero
 // @require      https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.4/jquery.min.js
@@ -34,7 +34,6 @@
 
 (function () {
     'use strict';
-    //  $(document).ready(function () {
     var urlPeriodico = window.location.hostname.replace(/^(?:https?:\/\/)?(?:www\.)?/i, "").split('/')[0]; // Elimina http,https,wwww de la url
     var nombreFn = urlPeriodico.substring(0, urlPeriodico.lastIndexOf(".")); // Recoge el nombre del periódico en minúsculas, que es el nombre de las funciones
     switch (urlPeriodico) { // Switch case por si hay que añadir código distinto para cada periódico o hacer modificaciones específicas
@@ -157,7 +156,9 @@
         $(".tp-iframe-wrapper").remove();
         $(".tp-modal").remove();
         $(".tp-backdrop").remove();
+        $(".md-suscription").remove();
         $("#megasuperior").remove(); // Un espacio en blanco enorme que no viene a cuento
+        $("#gallerynews_footer").remove(); // Un espacio en blanco enorme que no viene a cuento
         $(".flocktory-widget-overlay").remove(); // Un espacio en blanco enorme que no viene a cuento
         $(".main-story").removeClass("tp-modal-open");
     }
@@ -223,7 +224,23 @@
         return result;
     }
 
+    function addGlobalStyle(css) {
+        var head, style;
+        head = document.getElementsByTagName('head')[0];
+        if (!head) { return; }
+        style = document.createElement('style');
+        style.type = 'text/css';
+        style.innerHTML = css;
+        head.appendChild(style);
+    }
 
-    //});
+    $(document).ready(function () { //When document has loaded
+        setTimeout(function () {
+            var idMix = makeid(5) + makeid(5);
+            addGlobalStyle(" ." + idMix + " { width:400px; height:20px; height:auto; position:absolute; left:40%; margin-left:-100px; bottom:10px; background-color: #383838; color: #F0F0F0; font-family: Calibri; font-size: 20px; padding:10px; text-align:center; border-radius: 2px; -webkit-box-shadow: 0px 0px 24px -1px rgba(56, 56, 56, 1); -moz-box-shadow: 0px 0px 24px -1px rgba(56, 56, 56, 1); box-shadow: 0px 0px 24px -1px rgba(56, 56, 56, 1); } ." + idMix + "{position:-webkit-sticky; position:sticky; top:0;}");
+            $("body").append(`<div class='` + idMix + `' style='display:none'>Anti-Adblock y publicidad bloqueada 😎</div>`);
+            $('.' + idMix).stop().fadeIn(400).delay(5000).fadeOut(400);
+        }, 2000);
+    });
 
 })();
