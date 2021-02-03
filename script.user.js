@@ -194,6 +194,11 @@
         var id = makeid(8);
         $(".wrapper voc-story").addClass(id); // Añade id única al wrapper
         $("." + id).removeClass("wrapper voc-story"); // Elimina la clase wrapper para confundir al script
+        $("#didomi-notice").remove();
+        $(".voc-animated-modal-bottom").remove();
+        if ($('body').children().first().css("position") == "fixed") {
+            $('body').children().first().remove();
+        }
     }
 
     function mediaset() {
