@@ -199,6 +199,9 @@
         if ($('body').children().first().css("position") == "fixed") {
             $('body').children().first().remove();
         }
+
+        $(".sign-on2").parent().parent().css("background-color", "#ffb3b3");
+        $(".sign-on2").parent().parent().css("text-decoration", "line-through");
     }
 
     function mediaset() {
