@@ -17,6 +17,7 @@ Elimina los avisos para deshabilitar el Adblock en diferentes periódicos Españ
 - Diario Sur
 - Andalucía Información
 - La Vanguardia
+- La Voz de Galicia
 
 ## Instalación
 
