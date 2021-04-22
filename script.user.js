@@ -2,7 +2,7 @@
 // @name         Spanish Press anti-adblock blocker
 // @run-at        document-start
 // @namespace    http://tampermonkey.net/
-// @version      0.46
+// @version      0.47
 // @description  Elimina los avisos molestos que muestran los periódicos para que desactives adblock. También permite leer artículos de manera ilimitada para algunas páginas.
 // @author       Mikel Granero
 // @require      https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.4/jquery.min.js
@@ -222,9 +222,14 @@
     function elpais() {
         // GRACIAS A ZEQUI https://greasyfork.org/es/users/413001-zequi
         // Trucar el número de noticias gratis por mes
-        var aa = JSON.parse(localStorage.getItem('ArcP'));
+        try {
+           /*  var aa = JSON.parse(localStorage.getItem('ArcP'));
         aa.anonymous.rc["8"].c = -11;
-        localStorage.setItem('ArcP', JSON.stringify(aa));
+        localStorage.setItem('ArcP', JSON.stringify(aa)); */
+        localStorage.removeItem("ArcP"); // Resetear el contador de noticias
+        } catch (error) {
+            console.log(error)
+        }
         // CABECERA
         $(".subscribe").remove(); // Botón Subscribirse al lado del botón login
         // PORTADA
@@ -234,10 +239,17 @@
         $(".f_c span.f_a").remove(); //en las imágenes, en el pie de foto se quita nombre del fotógrafo o agencia
         $(".a_tp").remove(); // seccion TrustProject
         $(".w_h_l").remove(); // en seccion comentarios, eliminar link a "normas"
-        $(".divFlex").remove(); // Quitar contador de noticias gratis
-        $("#acceptationCMPWall").remove(); // Quitar contador de noticias gratis
-        $("#didomi-host").remove(); // Quitar contador de noticias gratis
-        $(".fc-ab-root").remove(); // Quitar contador de noticias gratis
+        $(".divFlex").remove(); 
+        $("#acceptationCMPWall").remove(); 
+        $("#didomi-host").remove(); 
+        $(".fc-ab-root").remove(); 
+        $("body").css("overflow", "visible");
+        setTimeout(function(){
+            $(".mldb1-wrapper").remove(); // Quitar espacio en blanco de arriba
+            $(".fc-ab-root").remove();
+            $("body").css("overflow", "visible");
+            $(".paywallOffer ").remove();
+        }, 2000);
         $("body").css("overflow", "");
 
     }
