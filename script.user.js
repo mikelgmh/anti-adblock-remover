@@ -2,7 +2,7 @@
 // @name         Spanish Press anti-adblock blocker
 // @run-at        document-start
 // @namespace    http://tampermonkey.net/
-// @version      0.48
+// @version      0.49
 // @description  Elimina los avisos molestos que muestran los periódicos para que desactives adblock. También permite leer artículos de manera ilimitada para algunas páginas.
 // @author       Mikel Granero
 // @require      https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.4/jquery.min.js
@@ -128,7 +128,7 @@
                 console.log('%c Han intentado bloquear la navegación.', 'background: green; color: white; display: block;');
                 $(e.target).remove();
             }
-});
+        });
     }
 
     function diariosur() {
