@@ -2,7 +2,7 @@
 // @name         Spanish Press anti-adblock blocker
 // @run-at        document-start
 // @namespace    http://tampermonkey.net/
-// @version      0.47
+// @version      0.48
 // @description  Elimina los avisos molestos que muestran los periódicos para que desactives adblock. También permite leer artículos de manera ilimitada para algunas páginas.
 // @author       Mikel Granero
 // @require      https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.4/jquery.min.js
@@ -122,6 +122,13 @@
     function lavanguardia() {
         $(".ev-open-modal-paywall-REQUIRE_LOGIN").remove();
         $(".modal").remove();
+
+        $(document).on('DOMNodeInserted', function(e) {
+            if ( $(e.target).hasClass('ev-open-modal-paywall-ADB_DETECTION') ) {
+                console.log('%c Han intentado bloquear la navegación.', 'background: green; color: white; display: block;');
+                $(e.target).remove();
+            }
+});
     }
 
     function diariosur() {
@@ -168,6 +175,12 @@
         $("#sticky_container").remove();
         $(".flocktory-widget-overlay").remove(); // Un espacio en blanco enorme que no viene a cuento
         $(".main-story").removeClass("tp-modal-open");
+        $(".art--closed").css("background-color", "yellow");
+        //$(".art--closed h3").wrap("<s></s>")
+        $(".art--closed h3").css({
+            textDecoration: 'line-through'
+        });
+        $(".art--closed a").wrap("<s></s>")
     }
 
     function elcorreo() {
@@ -206,6 +219,8 @@
 
     function mediaset() {
         $("#pageMultisite").remove();
+        $("#div-gpt-ad-mega-superior").remove();
+        $("#MEGASUPERIOR").remove();
     }
 
     function libertaddigital() {
@@ -239,14 +254,21 @@
         $(".f_c span.f_a").remove(); //en las imágenes, en el pie de foto se quita nombre del fotógrafo o agencia
         $(".a_tp").remove(); // seccion TrustProject
         $(".w_h_l").remove(); // en seccion comentarios, eliminar link a "normas"
-        $(".divFlex").remove(); 
-        $("#acceptationCMPWall").remove(); 
-        $("#didomi-host").remove(); 
-        $(".fc-ab-root").remove(); 
+        $(".divFlex").remove();
+        $("#acceptationCMPWall").remove();
+        $("#didomi-host").remove();
+        $(".fc-ab-root").remove();
         $("body").css("overflow", "visible");
+        $(".x._pr._g.x-p.x-nf").css("padding","0px");
+        $(".x._pr.x-nf._g.x-p").css("border-bottom","none");
+        $("#s_b_df").remove(); // Elimina el botón de suscribirse de arriba de la página
         setTimeout(function(){
+            $(".me_f").find(`[data-ctn-subscription]`).parent().remove();
             $(".mldb1-wrapper").remove(); // Quitar espacio en blanco de arriba
+            $(".ad.ad-giga").remove(); // Quitar espacio en blanco de arriba
+            $("#counterLayerDiv").remove();
             $(".fc-ab-root").remove();
+            $(".fo_su").remove();
             $("body").css("overflow", "visible");
             $(".paywallOffer ").remove();
         }, 2000);
