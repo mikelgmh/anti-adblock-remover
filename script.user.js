@@ -2,7 +2,7 @@
 // @name         Spanish Press anti-adblock blocker
 // @run-at        document-start
 // @namespace    http://tampermonkey.net/
-// @version      0.49
+// @version      0.50
 // @description  Elimina los avisos molestos que muestran los periódicos para que desactives adblock. También permite leer artículos de manera ilimitada para algunas páginas.
 // @author       Mikel Granero
 // @require      https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.4/jquery.min.js
@@ -155,6 +155,33 @@
         $(".ue-c-cover-content__icon-premium").parent().parent().css("background-color", "#edab3b").css("opacity", "0.4"); //marca visualmente las noticias de pago
         $(".ue-c-cover-content__icon-premium").parent().parent().css("text-decoration", "line-through"); //Tacha los títulos de pago
         $(".ue-c-article__trust").remove(); // seccion TrustProject
+        $(document).on('DOMNodeInserted', function(e) {
+            if ( $(e.target).hasClass('tp-container-inner') ) {
+                console.log('%c Han intentado bloquear la navegación.', 'background: green; color: white; display: block;');
+                $(e.target).remove();
+            }
+        });
+
+        $('body').css('left', '300px');
+        $('html').css('left', '300px');
+        /* document.documentElement.addEventListener('DOMAttrModified', function(e){
+            if (e.attrName === 'style') {
+              console.log('prevValue: ' + e.prevValue, 'newValue: ' + e.newValue);
+            }
+          }, false); */
+        var body = document.getElementsByTagName('body');
+        var html = document.getElementsByTagName('html');
+        var observer = new MutationObserver(function(mutations) {
+            $("body").attr('style','')
+            $("html").attr('style','')
+          });
+          observer.observe(body[0], { 
+            attributes: true, 
+            attributeFilter: ['style'] });
+          observer.observe(html[0], { 
+            attributes: true, 
+            attributeFilter: ['style'] });
+          
 
     }
 
