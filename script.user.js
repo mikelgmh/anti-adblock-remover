@@ -2,7 +2,7 @@
 // @name         Spanish Press anti-adblock blocker
 // @run-at        document-start
 // @namespace    http://tampermonkey.net/
-// @version      0.51
+// @version      0.52
 // @description  Elimina los avisos molestos que muestran los periódicos para que desactives adblock. También permite leer artículos de manera ilimitada para algunas páginas.
 // @author       Mikel Granero
 // @require      https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.4/jquery.min.js
@@ -27,6 +27,7 @@
 // @include      https://www.lavozdegalicia.es/*
 // @include      https://andaluciainformacion.es/*
 // @include      https://www.lavanguardia.com/*
+// @include      https://www.elconfidencial.com/*
 // @grant        none
 // ==/UserScript==
 
@@ -93,6 +94,9 @@
             runScriptForPage(nombreFn);
             break;
         case "lavozdegalicia.es":
+            runScriptForPage(nombreFn);
+            break;
+        case "elconfidencial.com":
             runScriptForPage(nombreFn);
             break;
         default:
@@ -258,6 +262,26 @@
     function lavozdegalicia() {
         $(".cierre").parent().css("background-color", "#ff7575a3");
         $(".cierre").children(".content_wrapper").children("h2").children("a").css("text-decoration", "line-through");
+    }
+
+    function elconfidencial(){
+       $("article").each(function() {
+           var isExclusive = false;
+        this.classList.forEach(element => {
+            //this.classList.contains("--isExclusive")
+            console.log(element);
+           if(element.includes("--isExclusive")){
+            isExclusive = true;
+            console.log("Exclusive content");
+           }
+        });
+        if (isExclusive){
+            this.classList.add("prueba");
+            this.style.backgroundColor = "#ff7575a3";
+            this.style.textDecoration = "line-through";
+            this.querySelector(".art-tit").style.textDecoration= "line-through";
+        }
+       });
     }
 
 
