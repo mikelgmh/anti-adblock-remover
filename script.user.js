@@ -35,6 +35,12 @@
 // https://greasyfork.org/es/scripts/393417-el-pa%C3%ADs-cleaned-page-sin-l%C3%ADmite-de-noticias
 
 (function () {
+    //############################//
+    //         VARIABLES          //
+    //############################//
+    const paidArticleColor = "#ff7575a3";
+
+
     'use strict';
     var urlPeriodico = window.location.hostname.replace(/^(?:https?:\/\/)?(?:www\.)?/i, "").split('/')[0]; // Elimina http,https,wwww de la url
     var nombreFn = urlPeriodico.substring(0, urlPeriodico.lastIndexOf(".")); // Recoge el nombre del periódico en minúsculas, que es el nombre de las funciones
@@ -127,8 +133,8 @@
         $(".ev-open-modal-paywall-REQUIRE_LOGIN").remove();
         $(".modal").remove();
 
-        $(document).on('DOMNodeInserted', function(e) {
-            if ( $(e.target).hasClass('ev-open-modal-paywall-ADB_DETECTION') ) {
+        $(document).on('DOMNodeInserted', function (e) {
+            if ($(e.target).hasClass('ev-open-modal-paywall-ADB_DETECTION')) {
                 console.log('%c Han intentado bloquear la navegación.', 'background: green; color: white; display: block;');
                 $(e.target).remove();
             }
@@ -151,41 +157,44 @@
 
     function elmundo() {
         // GRACIAS A ZEQUI https://greasyfork.org/es/users/413001-zequi
-        $(".ue-c-seo-links-container").remove(); // CABECERA
-        // PORTADA
-        $(".ue-c-newsletter-widget").remove(); // modulo de newsletter
-        $(".ue-c-cover-content__byline-name").remove();
-        $(".servicios_vwo").remove(); //módulos de servicios
-        $(".ue-c-cover-content__icon-premium").parent().parent().css("background-color", "#edab3b").css("opacity", "0.4"); //marca visualmente las noticias de pago
-        $(".ue-c-cover-content__icon-premium").parent().parent().css("text-decoration", "line-through"); //Tacha los títulos de pago
-        $(".ue-c-article__trust").remove(); // seccion TrustProject
-        $(document).on('DOMNodeInserted', function(e) {
-            if ( $(e.target).hasClass('tp-container-inner') ) {
-                console.log('%c Han intentado bloquear la navegación.', 'background: green; color: white; display: block;');
-                $(e.target).remove();
-            }
-        });
+        try {
+            $(".ue-c-seo-links-container").remove(); // CABECERA
+            // PORTADA
+            $(".ue-c-newsletter-widget").remove(); // modulo de newsletter
+            $(".ue-c-cover-content__byline-name").remove();
+            $(".servicios_vwo").remove(); //módulos de servicios
+            $(".ue-c-cover-content__icon-premium").parent().parent().css("background-color", "#edab3b").css("opacity", "0.4"); //marca visualmente las noticias de pago
+            $(".ue-c-cover-content__icon-premium").parent().parent().css("text-decoration", "line-through"); //Tacha los títulos de pago
+            $(".ue-c-article__trust").remove(); // seccion TrustProject
+            $(document).on('DOMNodeInserted', function (e) {
+                if ($(e.target).hasClass('tp-container-inner')) {
+                    console.log('%c Han intentado bloquear la navegación.', 'background: green; color: white; display: block;');
+                    $(e.target).remove();
+                }
+            });
+    
+            $('body').css('left', '300px');
+            $('html').css('left', '300px');
+    
+           /*  var body = document.getElementsByTagName('body');
+            var html = document.getElementsByTagName('html');
+            var observer = new MutationObserver(function (mutations) {
+                $("body").attr('style', '')
+                $("html").attr('style', '')
+            });
+            observer.observe(body[0], {
+                attributes: true,
+                attributeFilter: ['style']
+            });
+            observer.observe(html[0], {
+                attributes: true,
+                attributeFilter: ['style']
+            }); */
+        } catch (error) {
+            console.log(error);
+        }
+       
 
-        $('body').css('left', '300px');
-        $('html').css('left', '300px');
-        /* document.documentElement.addEventListener('DOMAttrModified', function(e){
-            if (e.attrName === 'style') {
-              console.log('prevValue: ' + e.prevValue, 'newValue: ' + e.newValue);
-            }
-          }, false); */
-        var body = document.getElementsByTagName('body');
-        var html = document.getElementsByTagName('html');
-        var observer = new MutationObserver(function(mutations) {
-            $("body").attr('style','')
-            $("html").attr('style','')
-          });
-          observer.observe(body[0], { 
-            attributes: true, 
-            attributeFilter: ['style'] });
-          observer.observe(html[0], { 
-            attributes: true, 
-            attributeFilter: ['style'] });
-          
 
     }
 
@@ -264,24 +273,24 @@
         $(".cierre").children(".content_wrapper").children("h2").children("a").css("text-decoration", "line-through");
     }
 
-    function elconfidencial(){
-       $("article").each(function() {
-           var isExclusive = false;
-        this.classList.forEach(element => {
-            //this.classList.contains("--isExclusive")
-            console.log(element);
-           if(element.includes("--isExclusive")){
-            isExclusive = true;
-            console.log("Exclusive content");
-           }
+    function elconfidencial() {
+        $("article").each(function () {
+            var isExclusive = false;
+            this.classList.forEach(element => {
+                //this.classList.contains("--isExclusive")
+                console.log(element);
+                if (element.includes("--isExclusive")) {
+                    isExclusive = true;
+                    console.log("Exclusive content");
+                }
+            });
+            if (isExclusive) {
+                this.classList.add("prueba");
+                this.style.backgroundColor = "#ff7575a3";
+                this.style.textDecoration = "line-through";
+                this.querySelector(".art-tit").style.textDecoration = "line-through";
+            }
         });
-        if (isExclusive){
-            this.classList.add("prueba");
-            this.style.backgroundColor = "#ff7575a3";
-            this.style.textDecoration = "line-through";
-            this.querySelector(".art-tit").style.textDecoration= "line-through";
-        }
-       });
     }
 
 
@@ -289,10 +298,10 @@
         // GRACIAS A ZEQUI https://greasyfork.org/es/users/413001-zequi
         // Trucar el número de noticias gratis por mes
         try {
-           /*  var aa = JSON.parse(localStorage.getItem('ArcP'));
+            /*  var aa = JSON.parse(localStorage.getItem('ArcP'));
         aa.anonymous.rc["8"].c = -11;
         localStorage.setItem('ArcP', JSON.stringify(aa)); */
-        localStorage.removeItem("ArcP"); // Resetear el contador de noticias
+            localStorage.removeItem("ArcP"); // Resetear el contador de noticias
         } catch (error) {
             console.log(error)
         }
@@ -310,10 +319,10 @@
         $("#didomi-host").remove();
         $(".fc-ab-root").remove();
         $("body").css("overflow", "visible");
-        $(".x._pr._g.x-p.x-nf").css("padding","0px");
-        $(".x._pr.x-nf._g.x-p").css("border-bottom","none");
+        $(".x._pr._g.x-p.x-nf").css("padding", "0px");
+        $(".x._pr.x-nf._g.x-p").css("border-bottom", "none");
         $("#s_b_df").remove(); // Elimina el botón de suscribirse de arriba de la página
-        setTimeout(function(){
+        setTimeout(function () {
             $(".me_f").find(`[data-ctn-subscription]`).parent().remove();
             $(".mldb1-wrapper").remove(); // Quitar espacio en blanco de arriba
             $(".ad.ad-giga").remove(); // Quitar espacio en blanco de arriba
@@ -326,11 +335,11 @@
         $("body").css("overflow", ""); // Quitar el bloqueo de la barra de navegación
 
         // Tachar 
-        const paidArticles = $("article").find(".c_k.c_k-s").closest("article").css( {
+        const paidArticles = $("article").find(".c_k.c_k-s").closest("article").css({
             "background-color": "#ff7575a3",
             "text-decoration": "line-through"
-        } );
-        
+        });
+
         //$(".cierre").parent().css("background-color", "#ff7575a3");
         //$(".cierre").children(".content_wrapper").children("h2").children("a").css("text-decoration", "line-through");
 
@@ -351,20 +360,21 @@
     function addGlobalStyle(css) {
         var head, style;
         head = document.getElementsByTagName('head')[0];
-        if (!head) { return; }
+        if (!head) {
+            return;
+        }
         style = document.createElement('style');
         style.type = 'text/css';
         style.innerHTML = css;
         head.appendChild(style);
     }
 
-    $(document).ready(function () { //When document has loaded
-        setTimeout(function () {
-            var idMix = makeid(5) + makeid(5);
-            addGlobalStyle(" ." + idMix + " { width:400px; height:20px; height:auto; position:absolute; left:40%; margin-left:-100px; bottom:10px; background-color: #383838; color: #F0F0F0; font-family: Calibri; font-size: 20px; padding:10px; text-align:center; border-radius: 2px; -webkit-box-shadow: 0px 0px 24px -1px rgba(56, 56, 56, 1); -moz-box-shadow: 0px 0px 24px -1px rgba(56, 56, 56, 1); box-shadow: 0px 0px 24px -1px rgba(56, 56, 56, 1); position:-webkit-sticky; position:sticky; top:0; z-index:9999; }");
-            $("body").append(`<div class='` + idMix + `' style='display:none'>Anti-Adblock y publicidad bloqueada 😎</div>`);
-            $('.' + idMix).stop().fadeIn(400).delay(5000).fadeOut(400);
-        }, 2000);
-    });
+    // Mostrar mensaje de que el script funciona
+    setTimeout(function () {
+        var idMix = makeid(5) + makeid(5);
+        addGlobalStyle(" ." + idMix + " { width:400px; height:20px; height:auto; position:absolute; left:40%; margin-left:-100px; bottom:10px; background-color: #383838; color: #F0F0F0; font-family: Calibri; font-size: 20px; padding:10px; text-align:center; border-radius: 2px; -webkit-box-shadow: 0px 0px 24px -1px rgba(56, 56, 56, 1); -moz-box-shadow: 0px 0px 24px -1px rgba(56, 56, 56, 1); box-shadow: 0px 0px 24px -1px rgba(56, 56, 56, 1); position:-webkit-sticky; position:sticky; top:0; z-index:9999; }");
+        $("body").append(`<div class='` + idMix + `' style='display:none'>Anti-Adblock y publicidad bloqueada 😎</div>`);
+        $('.' + idMix).stop().fadeIn(400).delay(5000).fadeOut(400);
+    }, 2000);
 
 })();
