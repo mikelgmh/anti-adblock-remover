@@ -5,7 +5,6 @@
 // @version      0.52
 // @description  Elimina los avisos molestos que muestran los periódicos para que desactives adblock. También permite leer artículos de manera ilimitada para algunas páginas.
 // @author       Mikel Granero
-// @require      https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.4/jquery.min.js
 // @updateURL    https://github.com/mikelgmh/anti-adblock-remover/raw/master/script.user.js
 // @include      https://www.elespanol.com/*
 // @include      https://elpais.com/*
@@ -34,347 +33,156 @@
 // Una parte del bloqueador de El País y El Mundo son del autor "Zequi"
 // https://greasyfork.org/es/scripts/393417-el-pa%C3%ADs-cleaned-page-sin-l%C3%ADmite-de-noticias
 
-(function () {
-    //############################//
-    //         VARIABLES          //
-    //############################//
-    const paidArticleColor = "#ff7575a3";
+
+//############################//
+//      Mini Framework        //
+//############################//
 
 
-    'use strict';
-    var urlPeriodico = window.location.hostname.replace(/^(?:https?:\/\/)?(?:www\.)?/i, "").split('/')[0]; // Elimina http,https,wwww de la url
-    var nombreFn = urlPeriodico.substring(0, urlPeriodico.lastIndexOf(".")); // Recoge el nombre del periódico en minúsculas, que es el nombre de las funciones
-    switch (urlPeriodico) { // Switch case por si hay que añadir código distinto para cada periódico o hacer modificaciones específicas
-        case "elespanol.com":
-            runScriptForPage(nombreFn);
-            break;
-        case "elpais.com":
-            runScriptForPage(nombreFn);
-            break;
-        case "elcorreo.com":
-            runScriptForPage(nombreFn);
-            break;
-        case "diariovasco.com":
-            runScriptForPage(nombreFn);
-            break;
-        case "elmundo.es":
-            runScriptForPage(nombreFn);
-            break;
-        case "telecinco.es":
-            runScriptForPage("mediaset");
-            break;
-        case "mediaset.es":
-            runScriptForPage("mediaset");
-            break;
-        case "cuatro.com":
-            runScriptForPage("mediaset");
-            break;
-        case "factoriadeficcion.com":
-            runScriptForPage("mediaset");
-            break;
-        case "divinity.es":
-            runScriptForPage("mediaset");
-            break;
-        case "energytv.es":
-            runScriptForPage("mediaset");
-            break;
-        case "libertaddigital.com":
-            runScriptForPage(nombreFn);
-            break;
-        case "diariodenavarra.es":
-            runScriptForPage(nombreFn);
-            break;
-        case "lasprovincias.es":
-            runScriptForPage(nombreFn);
-            break;
-        case "elnortedecastilla.es":
-            runScriptForPage(nombreFn);
-            break;
-        case "diariosur.es":
-            runScriptForPage(nombreFn);
-            break;
-        case "andaluciainformacion.es":
-            runScriptForPage(nombreFn);
-            break;
-        case "lavanguardia.com":
-            runScriptForPage(nombreFn);
-            break;
-        case "lavozdegalicia.es":
-            runScriptForPage(nombreFn);
-            break;
-        case "elconfidencial.com":
-            runScriptForPage(nombreFn);
-            break;
-        default:
-    }
-
-
-    function runScriptForPage(funcName) { // Ejecuta 4 veces la función para la página especificada en el parámetro.
-        window.addEventListener('load', function () {
-            setTimeout(eval(funcName + "()"), 200);
-            setTimeout(eval(funcName + "()"), 500);
-            setTimeout(eval(funcName + "()"), 900);
-            setTimeout(eval(funcName + "()"), 3000);
-            // 4 veces porque hay veces que los avisos salen pelín más tarde.
-        }, false);
-    }
-
-    function andaluciainformacion() {
-        $("#onesignal-slidedown-container").remove();
-        $(".qc-cmp-ui-container").remove();
-        $("body").removeClass("qc-cmp-showing");
-        $("#modal-adblock").remove();
-        $(".paginador").remove();
-        $(".modal-overlay").remove();
-        $("body").css("overflow", "visible");
-    }
-
-    function lavanguardia() {
-        $(".ev-open-modal-paywall-REQUIRE_LOGIN").remove();
-        $(".modal").remove();
-
-        $(document).on('DOMNodeInserted', function (e) {
-            if ($(e.target).hasClass('ev-open-modal-paywall-ADB_DETECTION')) {
-                console.log('%c Han intentado bloquear la navegación.', 'background: green; color: white; display: block;');
-                $(e.target).remove();
-            }
-        });
-    }
-
-    function diariosur() {
-        elcorreo();
-    }
-
-    function lasprovincias() {
-        // Usa la misma app que El Correo
-        elcorreo();
-    }
-
-    function elnortedecastilla() {
-        // Usa la misma app que El Correo
-        elcorreo();
-    }
-
-    function elmundo() {
-        // GRACIAS A ZEQUI https://greasyfork.org/es/users/413001-zequi
+Object.assign(Element.prototype, {
+    cRemove() { // Custom remove
         try {
-            $(".ue-c-seo-links-container").remove(); // CABECERA
-            // PORTADA
-            $(".ue-c-newsletter-widget").remove(); // modulo de newsletter
-            $(".ue-c-cover-content__byline-name").remove();
-            $(".servicios_vwo").remove(); //módulos de servicios
-            $(".ue-c-cover-content__icon-premium").parent().parent().css("background-color", "#edab3b").css("opacity", "0.4"); //marca visualmente las noticias de pago
-            $(".ue-c-cover-content__icon-premium").parent().parent().css("text-decoration", "line-through"); //Tacha los títulos de pago
-            $(".ue-c-article__trust").remove(); // seccion TrustProject
-            $(document).on('DOMNodeInserted', function (e) {
-                if ($(e.target).hasClass('tp-container-inner')) {
-                    console.log('%c Han intentado bloquear la navegación.', 'background: green; color: white; display: block;');
-                    $(e.target).remove();
-                }
-            });
-    
-            $('body').css('left', '300px');
-            $('html').css('left', '300px');
-    
-           /*  var body = document.getElementsByTagName('body');
-            var html = document.getElementsByTagName('html');
-            var observer = new MutationObserver(function (mutations) {
-                $("body").attr('style', '')
-                $("html").attr('style', '')
-            });
-            observer.observe(body[0], {
-                attributes: true,
-                attributeFilter: ['style']
-            });
-            observer.observe(html[0], {
-                attributes: true,
-                attributeFilter: ['style']
-            }); */
+            if (this.parentNode !== null) {
+                this.parentNode.removeChild(this);
+            }
         } catch (error) {
             console.log(error);
         }
-       
-
-
+    },
+    cCrossThis() {
+        this.style.cssText = crossedArticleStyle;
     }
-
-    function diariodenavarra() {
-        // Como este periódico genera una ID única para que no pueda borrar el popup, selecciono el div que hay justo arriba con la id 'tLogo' y elimino el siguiente.
-        $('#tLogo').next('div').remove();
-    }
-
-    function elespanol() {
-        // Elimina modales que impiden scroll y que piden desactivar Adblock
-        $(".tp-iframe-wrapper").remove();
-        $(".tp-modal").remove();
-        $(".tp-backdrop").remove();
-        $(".md-suscription").remove();
-        $("#megasuperior").remove(); // Un espacio en blanco enorme que no viene a cuento
-        $("#gallerynews_footer").remove(); // Un espacio en blanco enorme que no viene a cuento
-        $("#didomi-notice").remove();
-        $("#sticky_container").remove();
-        $(".flocktory-widget-overlay").remove(); // Un espacio en blanco enorme que no viene a cuento
-        $(".main-story").removeClass("tp-modal-open");
-        $(".art--closed").css("background-color", "yellow");
-        //$(".art--closed h3").wrap("<s></s>")
-        $(".art--closed h3").css({
-            textDecoration: 'line-through'
+});
+Object.assign(NodeList.prototype, {
+    cRemove() { // Remove multiple elements from NodeList
+        this.forEach(element => {
+            element.cRemove();
         });
-        $(".art--closed a").wrap("<s></s>")
-    }
-
-    function elcorreo() {
-        var id = makeid(8);
-        $(".wrapper voc-story").addClass(id); // Añade id única al wrapper
-        $("." + id).removeClass("wrapper voc-story"); // Elimina la clase wrapper para confundir al script
-        $("#onesignal-slidedown-container").remove(); // Elimina las notificaciones para que actives las notificaciones del navegador.
-        $("#didomi-host").remove(); // Elimina la notificación de aceptar cookies en algunas páginas.
-        $("#elcorreo-analitica").remove(); // Elimina la notificación de aceptar cookies en algunas páginas.
-        $(".modal-dialog").remove(); // Elimina la notificación de aceptar cookies en algunas páginas.
-        $(".voc-animated-modal-bottom").remove(); // Elimina la notificación de aceptar cookies en algunas páginas.
-        if ($('body').css('overflow') == "hidden") {
-            $('body').css('overflow', 'auto');
-
-        }
-
-        if ($('body').children().first().css("position") == "fixed") {
-            $('body').children().first().remove();
-        }
-
-    }
-
-    function diariovasco() {
-        var id = makeid(8);
-        $(".wrapper voc-story").addClass(id); // Añade id única al wrapper
-        $("." + id).removeClass("wrapper voc-story"); // Elimina la clase wrapper para confundir al script
-        $("#didomi-notice").remove();
-        $(".voc-animated-modal-bottom").remove();
-        if ($('body').children().first().css("position") == "fixed") {
-            $('body').children().first().remove();
-        }
-
-        $(".sign-on2").parent().parent().css("background-color", "#ffb3b3");
-        $(".sign-on2").parent().parent().css("text-decoration", "line-through");
-    }
-
-    function mediaset() {
-        $("#pageMultisite").remove();
-        $("#div-gpt-ad-mega-superior").remove();
-        $("#MEGASUPERIOR").remove();
-    }
-
-    function libertaddigital() {
-        $(".jquery-modal blocker current").remove();
-        $(".portada scrolled").removeAttr("style")
-    }
-
-    function lavozdegalicia() {
-        $(".cierre").parent().css("background-color", "#ff7575a3");
-        $(".cierre").children(".content_wrapper").children("h2").children("a").css("text-decoration", "line-through");
-    }
-
-    function elconfidencial() {
-        $("article").each(function () {
-            var isExclusive = false;
-            this.classList.forEach(element => {
-                //this.classList.contains("--isExclusive")
-                console.log(element);
-                if (element.includes("--isExclusive")) {
-                    isExclusive = true;
-                    console.log("Exclusive content");
-                }
-            });
-            if (isExclusive) {
-                this.classList.add("prueba");
-                this.style.backgroundColor = "#ff7575a3";
-                this.style.textDecoration = "line-through";
-                this.querySelector(".art-tit").style.textDecoration = "line-through";
+    },
+    cRemoveParent(parent) { // Remove all closest parent from every element
+        this.forEach(element => {
+            element.closest(parent).cRemove();
+        });
+    },
+    cCrossClosestParents(parent) {
+        this.forEach(element => {
+            element.closest(parent).style.cssText = crossedArticleStyle;
+        });
+    },
+    cCrossParentsWithClass(parentName, className) {
+        this.forEach(element => {
+            if (element.closest(parentName).classList.includes(className)) {
+                element.closest(parentName).style.cssText = crossedArticleStyle;
             }
         });
-    }
+    },
+    cCrossThisWithClassThatContains( className) {
+        this.forEach(element => {
+            element.classList.forEach(cclass => {
+                if (cclass.includes(className)) {
+                    element.style.cssText = crossedArticleStyle;
+                }
+            });
+            
+        });
+    },
+    cCrossElementsWithClass(className) {
+        this.forEach(element => {
+            if (element.classList.includes(className)) {
+                element.style.cssText = crossedArticleStyle;
+            }
+        });
+    },
+    cCrossThis() {
+        this.forEach(element => {
+            element.style.cssText = crossedArticleStyle;
 
-
-    function elpais() {
-        // GRACIAS A ZEQUI https://greasyfork.org/es/users/413001-zequi
-        // Trucar el número de noticias gratis por mes
-        try {
-            /*  var aa = JSON.parse(localStorage.getItem('ArcP'));
-        aa.anonymous.rc["8"].c = -11;
-        localStorage.setItem('ArcP', JSON.stringify(aa)); */
-            localStorage.removeItem("ArcP"); // Resetear el contador de noticias
-        } catch (error) {
-            console.log(error)
-        }
-        // CABECERA
-        $(".subscribe").remove(); // Botón Subscribirse al lado del botón login
-        // PORTADA
-        $(".classifieds_widget").remove(); //modulo de publicidad
-        $("classifieds_widget").remove(); //modulo de servicios
-        // PageNOTICIA > pre-CUERPO
-        $(".f_c span.f_a").remove(); //en las imágenes, en el pie de foto se quita nombre del fotógrafo o agencia
-        $(".a_tp").remove(); // seccion TrustProject
-        $(".w_h_l").remove(); // en seccion comentarios, eliminar link a "normas"
-        $(".divFlex").remove();
-        $("#acceptationCMPWall").remove();
-        $("#didomi-host").remove();
-        $(".fc-ab-root").remove();
-        $("body").css("overflow", "visible");
-        $(".x._pr._g.x-p.x-nf").css("padding", "0px");
-        $(".x._pr.x-nf._g.x-p").css("border-bottom", "none");
-        $("#s_b_df").remove(); // Elimina el botón de suscribirse de arriba de la página
-        setTimeout(function () {
-            $(".me_f").find(`[data-ctn-subscription]`).parent().remove();
-            $(".mldb1-wrapper").remove(); // Quitar espacio en blanco de arriba
-            $(".ad.ad-giga").remove(); // Quitar espacio en blanco de arriba
-            $("#counterLayerDiv").remove();
-            $(".fc-ab-root").remove();
-            $(".fo_su").remove();
-            $("body").css("overflow", "visible");
-            $(".paywallOffer ").remove();
-        }, 2000);
-        $("body").css("overflow", ""); // Quitar el bloqueo de la barra de navegación
-
-        // Tachar 
-        const paidArticles = $("article").find(".c_k.c_k-s").closest("article").css({
-            "background-color": "#ff7575a3",
-            "text-decoration": "line-through"
         });
 
-        //$(".cierre").parent().css("background-color", "#ff7575a3");
-        //$(".cierre").children(".content_wrapper").children("h2").children("a").css("text-decoration", "line-through");
-
     }
 
-    // Esta función es imprescindible para páginas como el correo.
-    // Crea una ID única por cada carga de una página para que las páginas no detecten este script.
-    function makeid(length) {
-        var result = '';
-        var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-        var charactersLength = characters.length;
-        for (var i = 0; i < length; i++) {
-            result += characters.charAt(Math.floor(Math.random() * charactersLength));
-        }
-        return result;
+});
+//############################//
+//         VARIABLES          //
+//############################//
+const paidArticleColor = "#ffa8a8";
+const crossedArticleStyle = "background-color: " + paidArticleColor + "; text-decoration: line-through; opacity: 0.7;"
+
+var urlPeriodico = window.location.hostname.replace(/^(?:https?:\/\/)?(?:www\.)?/i, "").split('/')[0]; // Elimina http,https,wwww de la url
+const fnName = urlPeriodico.substring(0, urlPeriodico.lastIndexOf(".")); // Recoge el nombre del periódico en minúsculas, que es el nombre de las funciones
+document.addEventListener("DOMContentLoaded", () => {
+    console.log("Starting Switch case");
+    switch (urlPeriodico) { // Switch case por si hay que añadir código distinto para cada periódico o hacer modificaciones específicas
+        case "elmundo.es":
+            elmundo();
+            break;
+        case "elespanol.com":
+            elespanol();
+            break;
+        case "elpais.com":
+            elpais();
+            break;
+        case "elcorreo.com":
+            elcorreo();
+            break;
+        case "diariovasco.com":
+            diariovasco();
+            break;
+        case "elconfidencial.com":
+            elconfidencial();
+            break;
+        default:
     }
+});
 
-    function addGlobalStyle(css) {
-        var head, style;
-        head = document.getElementsByTagName('head')[0];
-        if (!head) {
-            return;
-        }
-        style = document.createElement('style');
-        style.type = 'text/css';
-        style.innerHTML = css;
-        head.appendChild(style);
+async function elconfidencial(){
+    document.querySelectorAll("article").cCrossThisWithClassThatContains("--isExclusive");
+    document.querySelector(".ph-suscribe-bt").cRemove();
+}
+
+async function elmundo() {
+    document.querySelectorAll(".ue-c-cover-content__icon-premium").cCrossClosestParents(".ue-c-cover-content__body"); // Tachar los articles premium
+}
+
+async function elespanol() {
+    document.querySelectorAll(".art--closed").cCrossThis();
+    document.querySelector(".msg-footer").cRemove(); // Remove subscription popup
+    document.querySelector("#link_bar_top_user_area").cRemove(); // Remove subscription button
+}
+
+async function elpais() {
+    document.querySelectorAll(".c_k.c_k-s").cCrossClosestParents("article"); // Tachar los articles premium
+    document.querySelector("#s_b_df").cRemove(); // Delete the subscription button
+
+}
+
+async function elcorreo() {
+    document.querySelectorAll(".sign-on2").cCrossClosestParents("article");
+    document.querySelectorAll(".container-onplus-home-bg").cRemove();
+
+}
+async function diariovasco() {
+    elcorreo();
+    await wait(1);
+    document.querySelectorAll(".voc-animated-modal-bottom").cRemove();
+}
+
+async function wait(seconds) {
+    await new Promise(resolve => setTimeout(resolve, seconds * 1000)); // Wait 3 seconds to remove subscription popup
+}
+
+function onUrlChange() { // 
+    eval(fnName + "()");
+}
+
+let lastUrl = location.href;
+new MutationObserver(() => {
+    const url = location.href;
+    if (url !== lastUrl) {
+        lastUrl = url;
+        onUrlChange();
     }
-
-    // Mostrar mensaje de que el script funciona
-    setTimeout(function () {
-        var idMix = makeid(5) + makeid(5);
-        addGlobalStyle(" ." + idMix + " { width:400px; height:20px; height:auto; position:absolute; left:40%; margin-left:-100px; bottom:10px; background-color: #383838; color: #F0F0F0; font-family: Calibri; font-size: 20px; padding:10px; text-align:center; border-radius: 2px; -webkit-box-shadow: 0px 0px 24px -1px rgba(56, 56, 56, 1); -moz-box-shadow: 0px 0px 24px -1px rgba(56, 56, 56, 1); box-shadow: 0px 0px 24px -1px rgba(56, 56, 56, 1); position:-webkit-sticky; position:sticky; top:0; z-index:9999; }");
-        $("body").append(`<div class='` + idMix + `' style='display:none'>Anti-Adblock y publicidad bloqueada 😎</div>`);
-        $('.' + idMix).stop().fadeIn(400).delay(5000).fadeOut(400);
-    }, 2000);
-
-})();
+}).observe(document, {
+    subtree: true,
+    childList: true
+});
