@@ -265,23 +265,16 @@
     }
 
     function elconfidencial(){
-       $("article").each(function() {
-           var isExclusive = false;
-        this.classList.forEach(element => {
-            //this.classList.contains("--isExclusive")
-            console.log(element);
-           if(element.includes("--isExclusive")){
-            isExclusive = true;
-            console.log("Exclusive content");
-           }
-        });
-        if (isExclusive){
-            this.classList.add("prueba");
-            this.style.backgroundColor = "#ff7575a3";
-            this.style.textDecoration = "line-through";
-            this.querySelector(".art-tit").style.textDecoration= "line-through";
-        }
-       });
+       const $ = jQuery || window.$;
+       const paywallSelector = ".newsType__content--closed"
+       setTimeout(() => {
+           console.log("HI I AM TAMPERMONKEY");
+           $(paywallSelector).removeClass("newsType__content--closed");
+       }, 1000);
+       setTimeout(() => {
+           console.log("HI I AM TAMPERMONKEY");
+           $(paywallSelector).removeClass("newsType__content--closed");
+       }, 5000);
     }
 
 
